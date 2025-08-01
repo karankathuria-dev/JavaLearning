@@ -12,7 +12,7 @@ public class LinkedListTester {
         list.insertAtTail(5);
         list.insertAtTail(30);
         list.displayList(); // Expected: 20 -> 10 -> 5 -> 30 -> null
-
+//system.out.println is used for output in our screen with new line.
         System.out.println("List length: " + list.getLength()); // Expected: 4
 
         list.insertAtIndex(15, 2); // Insert 15 at index 2 (after 10)
