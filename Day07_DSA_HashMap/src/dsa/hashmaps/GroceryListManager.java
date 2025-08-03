@@ -7,7 +7,7 @@ public class GroceryListManager {
     public static void main(String[] args) {
         // Create a new ArrayList of Strings
         ArrayList<String> groceryList = new ArrayList<>();
-
+        // This is my grocery list manager.
         // Add at least 5 different grocery items to the list
         groceryList.add("Milk");
         groceryList.add("Bread");
