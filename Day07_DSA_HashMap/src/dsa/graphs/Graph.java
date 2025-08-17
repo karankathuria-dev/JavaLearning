@@ -1,9 +1,6 @@
 package dsa.graphs;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graph {
     // The adjacency list representation of the graph
@@ -49,26 +46,85 @@ public class Graph {
         }
     }
 
+    // --- Graph Traversal Methods ---
+
+    /**
+     * Implements Breadth-First Search (BFS) starting from a given node.
+     *
+     * @param startNode The node to start the traversal from.
+     */
+    public void bfs(int startNode) {
+        if (!adjList.containsKey(startNode)) {
+            System.out.println("Node not found.");
+            return;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
+        queue.add(startNode);
+        visited.add(startNode);
+
+        System.out.print("\nBFS Traversal (starting from " + startNode + "): ");
+
+        while (!queue.isEmpty()) {
+            int currentNode = queue.poll();
+            System.out.print(currentNode + " ");
+
+            for (int neighbor : adjList.get(currentNode)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * Implements Depth-First Search (DFS) starting from a given node.
+     *
+     * @param startNode The node to start the traversal from.
+     */
+    public void dfs(int startNode) {
+        if (!adjList.containsKey(startNode)) {
+            System.out.println("Node not found.");
+            return;
+        }
+
+        System.out.print("\nDFS Traversal (starting from " + startNode + "): ");
+        Set<Integer> visited = new HashSet<>();
+        dfsRecursive(startNode, visited);
+        System.out.println();
+    }
+
+    // Private recursive helper for DFS
+    private void dfsRecursive(int currentNode, Set<Integer> visited) {
+        visited.add(currentNode);
+        System.out.print(currentNode + " ");
+
+        for (int neighbor : adjList.get(currentNode)) {
+            if (!visited.contains(neighbor)) {
+                dfsRecursive(neighbor, visited);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Graph graph = new Graph();
 
-        // Add nodes
-        graph.addNode(1);
-        graph.addNode(2);
-        graph.addNode(3);
-        graph.addNode(4);
-
-        // Add edges to create connections
-        // (1, 2)
-        // (1, 3)
-        // (2, 3)
-        // (4, 1)
+        // Build a sample graph
         graph.addEdge(1, 2);
         graph.addEdge(1, 3);
-        graph.addEdge(2, 3);
-        graph.addEdge(4, 1);
+        graph.addEdge(2, 4);
+        graph.addEdge(2, 5);
+        graph.addEdge(3, 6);
+        graph.addEdge(3, 7);
+        graph.addEdge(4, 8);
 
-        // Print the final graph structure
         graph.printGraph();
+
+        graph.bfs(1);
+        graph.dfs(1);
     }
 }
