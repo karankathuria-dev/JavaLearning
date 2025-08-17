@@ -3,11 +3,6 @@ package dsa.trees;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * A simple implementation of a Binary Tree.
- * For this exercise, we will use a level-order (breadth-first)
- * insertion to build the tree.
- */
 public class BinaryTree {
     Node root;
 
@@ -15,28 +10,20 @@ public class BinaryTree {
         this.root = null;
     }
 
-    /**
-     * Inserts a new node into the tree in a level-order fashion.
-     *
-     * @param data The data to be inserted.
-     */
     public void insert(int data) {
         Node newNode = new Node(data);
 
-        // If the tree is empty, the new node becomes the root
         if (root == null) {
             root = newNode;
             return;
         }
 
-        // Use a Queue to find the first available spot
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
 
         while (!queue.isEmpty()) {
             Node currentNode = queue.remove();
 
-            // Insert into the left child if it's empty
             if (currentNode.left == null) {
                 currentNode.left = newNode;
                 return;
@@ -44,7 +31,6 @@ public class BinaryTree {
                 queue.add(currentNode.left);
             }
 
-            // Insert into the right child if it's empty
             if (currentNode.right == null) {
                 currentNode.right = newNode;
                 return;
@@ -54,28 +40,72 @@ public class BinaryTree {
         }
     }
 
-    // A simple method to check if the tree has nodes
-    public boolean isEmpty() {
-        return root == null;
+    // --- Traversal Methods ---
+
+    // 1. Inorder Traversal (Left -> Root -> Right)
+    public void inorderTraversal() {
+        System.out.print("Inorder Traversal: ");
+        inorderRecursive(root);
+        System.out.println();
+    }
+
+    private void inorderRecursive(Node node) {
+        if (node != null) {
+            inorderRecursive(node.left);
+            System.out.print(node.data + " ");
+            inorderRecursive(node.right);
+        }
+    }
+
+    // 2. Preorder Traversal (Root -> Left -> Right)
+    public void preorderTraversal() {
+        System.out.print("Preorder Traversal: ");
+        preorderRecursive(root);
+        System.out.println();
+    }
+
+    private void preorderRecursive(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preorderRecursive(node.left);
+            preorderRecursive(node.right);
+        }
+    }
+
+    // 3. Postorder Traversal (Left -> Right -> Root)
+    public void postorderTraversal() {
+        System.out.print("Postorder Traversal: ");
+        postorderRecursive(root);
+        System.out.println();
+    }
+
+    private void postorderRecursive(Node node) {
+        if (node != null) {
+            postorderRecursive(node.left);
+            postorderRecursive(node.right);
+            System.out.print(node.data + " ");
+        }
     }
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
 
-        System.out.println("Is the tree empty? " + tree.isEmpty()); // Expected: true
-
-        // Insert some nodes
+        // Build a sample tree
+        //         10
+        //        /  \
+        //      20    30
+        //     /  \
+        //   40    50
         tree.insert(10);
         tree.insert(20);
         tree.insert(30);
         tree.insert(40);
         tree.insert(50);
 
-        System.out.println("Is the tree empty? " + tree.isEmpty()); // Expected: false
+        System.out.println("Tree built successfully. Now let's traverse it.\n");
 
-        System.out.println("Binary Tree successfully created!");
-        System.out.println("Root is: " + tree.root.data);
-        System.out.println("Root's left child is: " + tree.root.left.data);
-        System.out.println("Root's right child is: " + tree.root.right.data);
+        tree.inorderTraversal();
+        tree.preorderTraversal();
+        tree.postorderTraversal();
     }
 }
